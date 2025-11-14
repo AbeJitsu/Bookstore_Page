@@ -89,6 +89,27 @@
         </div>
     </div>
 
+    <div id="success-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="success-modal-title">
+        <div class="modal-content success-modal-content">
+            <div class="modal-header success-header">
+                <div class="success-icon">
+                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                    </svg>
+                </div>
+            </div>
+            <div class="modal-body success-body">
+                <h2 id="success-modal-title">Order Confirmed!</h2>
+                <p class="success-message">Thank you for your purchase</p>
+                <div id="order-summary" class="order-summary"></div>
+            </div>
+            <div class="modal-footer">
+                <button id="success-close-btn" class="btn btn-accent">Continue Shopping</button>
+            </div>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>

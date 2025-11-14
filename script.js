@@ -58,10 +58,32 @@ class ShoppingCart {
         this.checkoutBtn.addEventListener('click', () => this.handleCheckout());
         this.modalCheckoutBtn.addEventListener('click', () => this.handleCheckout());
 
+        // Success modal close button
+        const successCloseBtn = document.getElementById('success-close-btn');
+        if (successCloseBtn) {
+            successCloseBtn.addEventListener('click', () => this.closeSuccessModal());
+        }
+
+        // Close success modal on backdrop click
+        const successModal = document.getElementById('success-modal');
+        if (successModal) {
+            successModal.addEventListener('click', (e) => {
+                if (e.target === successModal) {
+                    this.closeSuccessModal();
+                }
+            });
+        }
+
         // Keyboard navigation
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && this.cartModal.classList.contains('active')) {
-                this.closeCart();
+            if (e.key === 'Escape') {
+                if (this.cartModal.classList.contains('active')) {
+                    this.closeCart();
+                }
+                const successModal = document.getElementById('success-modal');
+                if (successModal && successModal.classList.contains('active')) {
+                    this.closeSuccessModal();
+                }
             }
         });
     }
@@ -192,23 +214,58 @@ class ShoppingCart {
             return;
         }
 
-        const total = this.calculateTotal();
-        const itemCount = this.cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
-
         // Simulate checkout process
         this.showNotification('Processing checkout...', 'info');
 
         setTimeout(() => {
-            alert(`🎉 Thank you for your purchase!\n\nItems: ${itemCount}\nTotal: $${total.toFixed(2)}\n\nThis is a demo - no actual payment was processed.`);
-
-            // Clear cart
-            this.cart = [];
-            this.saveCart();
-            this.updateCartUI();
+            this.showSuccessModal();
             this.closeCart();
+        }, 800);
+    }
 
-            this.showNotification('Order completed successfully!', 'success');
-        }, 1000);
+    // Show success modal
+    showSuccessModal() {
+        const successModal = document.getElementById('success-modal');
+        const orderSummary = document.getElementById('order-summary');
+        const total = this.calculateTotal();
+        const itemCount = this.cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+
+        // Build order summary
+        let summaryHTML = '<div class="order-summary-items">';
+        this.cart.forEach(item => {
+            const itemTotal = item.price * (item.quantity || 1);
+            summaryHTML += `
+                <div class="order-summary-item">
+                    <span>${item.title} ${item.quantity > 1 ? `x${item.quantity}` : ''}</span>
+                    <span>$${itemTotal.toFixed(2)}</span>
+                </div>
+            `;
+        });
+        summaryHTML += '</div>';
+        summaryHTML += `
+            <div class="order-summary-total">
+                <span>Total</span>
+                <span>$${total.toFixed(2)}</span>
+            </div>
+        `;
+
+        orderSummary.innerHTML = summaryHTML;
+
+        // Show modal
+        successModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+
+        // Clear cart
+        this.cart = [];
+        this.saveCart();
+        this.updateCartUI();
+    }
+
+    // Close success modal
+    closeSuccessModal() {
+        const successModal = document.getElementById('success-modal');
+        successModal.classList.remove('active');
+        document.body.style.overflow = '';
     }
 
     // Show notification toast
