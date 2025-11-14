@@ -3,27 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XYZ Bookstore</title>
+    <title>XYZ Bookstore - Premium Book Collection</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>XYZ Bookstore</h1>
-    <p>Browse our collection of amazing books!</p>
-    <div class="card-container">
-        <div class="card" id="sally-adventure-book">
-            <h2>Sally's SciFi Adventure</h2>
-            <p>This is an epic story of Sally and her dog Rex as they navigate through other worlds.</p>
-            <button class="btn">Buy Now</button>
-        </div>
-        <div class="card" id="dave-cooking-book">
-            <h2>Dave's Cooking Adventure</h2>
-            <p>This is the story of Dave as he learns to cook everything from pancakes to pasta, one recipe at a time.</p>
-            <button class="btn">Buy Now</button>
+    <header class="site-header">
+        <h1>XYZ Bookstore</h1>
+        <button id="cart-toggle" class="cart-btn" aria-label="View shopping cart">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="9" cy="21" r="1"></circle>
+                <circle cx="20" cy="21" r="1"></circle>
+                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+            </svg>
+            <span id="cart-count" class="cart-badge" aria-live="polite">0</span>
+        </button>
+    </header>
+
+    <main>
+        <section class="hero">
+            <p class="hero-text">Browse our collection of amazing books!</p>
+        </section>
+
+        <section class="books-section">
+            <div class="card-container">
+                <article class="card" id="sally-adventure-book" data-book-id="1">
+                    <div class="card-content">
+                        <h2 class="book-title">Sally's SciFi Adventure</h2>
+                        <p class="book-description">This is an epic story of Sally and her dog Rex as they navigate through other worlds.</p>
+                        <div class="book-footer">
+                            <span class="book-price" data-price="24.99">$24.99</span>
+                            <button class="btn btn-primary add-to-cart" data-book-id="1" data-book-title="Sally's SciFi Adventure" data-book-price="24.99" aria-label="Add Sally's SciFi Adventure to cart">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </article>
+                <article class="card" id="dave-cooking-book" data-book-id="2">
+                    <div class="card-content">
+                        <h2 class="book-title">Dave's Cooking Adventure</h2>
+                        <p class="book-description">This is the story of Dave as he learns to cook everything from pancakes to pasta, one recipe at a time.</p>
+                        <div class="book-footer">
+                            <span class="book-price" data-price="19.99">$19.99</span>
+                            <button class="btn btn-primary add-to-cart" data-book-id="2" data-book-title="Dave's Cooking Adventure" data-book-price="19.99" aria-label="Add Dave's Cooking Adventure to cart">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="checkout-section">
+            <p class="checkout-text">Review your selections and continue to checkout.</p>
+            <div class="btn-container">
+                <button id="view-cart-btn" class="btn btn-secondary" aria-label="View shopping cart">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="9" cy="21" r="1"></circle>
+                        <circle cx="20" cy="21" r="1"></circle>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                    </svg>
+                    View Cart
+                </button>
+                <button id="checkout-btn" class="btn btn-accent" aria-label="Proceed to checkout">Checkout</button>
+            </div>
+        </section>
+    </main>
+
+    <div id="cart-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="cart-modal-title">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="cart-modal-title">Shopping Cart</h2>
+                <button class="modal-close" aria-label="Close cart">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="cart-items"></div>
+                <div class="cart-total">
+                    <strong>Total:</strong>
+                    <span id="cart-total-amount">$0.00</span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary modal-close">Continue Shopping</button>
+                <button id="modal-checkout-btn" class="btn btn-accent">Checkout</button>
+            </div>
         </div>
     </div>
-    <p>Review your selections and continue to checkout.</p>
-    <div class="btn-container">
-        <button id="view-cart-btn" class="btn">View Cart</button>
-        <button id="checkout-btn" class="btn">Checkout</button>
-    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
